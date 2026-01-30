@@ -1,0 +1,434 @@
+{
+ "actions": [],
+ "creation": "2025-12-13 11:09:27.156641",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_czhy",
+  "amended_from",
+  "status",
+  "column_break_lmjm",
+  "created_date",
+  "column_break_lxqs",
+  "created_by",
+  "primary_organisation",
+  "current_owner",
+  "section_break_fiaw",
+  "segment",
+  "sub_segment",
+  "sub_sub_segment",
+  "column_break_eivr",
+  "enquiry_date",
+  "column_break_ebuq",
+  "enquiry_type",
+  "enquiry_type_radio",
+  "section_break_oese",
+  "customer_type",
+  "customer_name",
+  "end_user_name",
+  "column_break_dqon",
+  "consultant",
+  "expected_offer_date",
+  "reference",
+  "column_break_kbun",
+  "customer_enquiry_ref_no",
+  "section_break_cwvw",
+  "project_name",
+  "column_break_ggym",
+  "project_country",
+  "project_location",
+  "column_break_zufd",
+  "project_type",
+  "project_type_radio",
+  "section_break_cuof",
+  "description",
+  "section_break_jnjr",
+  "special_requirement",
+  "contact_details_section",
+  "table_ogtz",
+  "section_break_xxgd",
+  "attachments",
+  "section_break_sljd",
+  "table_xlzm",
+  "tab_2_tab",
+  "reason_for_regret",
+  "doubts__clarification_needed"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_czhy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Enquiry",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "\nDraft\nOpen\nOffer\nUnclear\nRegret",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_lmjm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "created_date",
+   "fieldtype": "Date",
+   "label": "Created Date",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_lxqs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "__user",
+   "fieldname": "created_by",
+   "fieldtype": "Link",
+   "label": "Created By",
+   "no_copy": 1,
+   "options": "User Configuration",
+   "read_only": 1
+  },
+  {
+   "fieldname": "current_owner",
+   "fieldtype": "Link",
+   "label": "Current Owner",
+   "no_copy": 1,
+   "options": "User Configuration",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_fiaw",
+   "fieldtype": "Section Break",
+   "label": "Enquiry Details"
+  },
+  {
+   "fieldname": "segment",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Segment",
+   "link_filters": "[[\"Segment\",\"is_group\",\"=\",1]]",
+   "options": "Segment",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sub_segment",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sub Segment",
+   "link_filters": "[[\"Segment\",\"is_group\",\"=\",1]]",
+   "options": "Segment",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sub_sub_segment",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sub Sub Segment",
+   "link_filters": "[[\"Segment\",\"is_group\",\"=\",0]]",
+   "options": "Segment",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_eivr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "enquiry_date",
+   "fieldtype": "Date",
+   "label": "Enquiry Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_ebuq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "enquiry_type",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Enquiry Type",
+   "options": "\nFirm\nBudgetory\nTender\nIdea"
+  },
+  {
+   "fieldname": "enquiry_type_radio",
+   "fieldtype": "HTML",
+   "label": "Enquiry Type Radio",
+   "options": "<h5 style=\"margin-bottom: 8px;\">\n  Enquiry Type <span style=\"color:red;\">*</span>\n</h5>\n\n<div>\n  <label>\n    <input type=\"radio\" name=\"etype\" value=\"Firm\" required> Firm\n  </label><br>\n\n  <label>\n    <input type=\"radio\" name=\"etype\" value=\"Budgetory\"> Budgetory\n  </label><br>\n\n  <label>\n    <input type=\"radio\" name=\"etype\" value=\"Idea\"> Idea\n  </label><br>\n\n  <label>\n    <input type=\"radio\" name=\"etype\" value=\"Tender\"> Tender\n  </label>\n</div>\n"
+  },
+  {
+   "fieldname": "section_break_oese",
+   "fieldtype": "Section Break",
+   "label": "Customer Details"
+  },
+  {
+   "fieldname": "customer_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Customer Type",
+   "options": "\nEnd User\nContractor",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Link",
+   "label": "Customer Name",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_user_name",
+   "fieldtype": "Link",
+   "label": "End User Name",
+   "link_filters": "[[\"Customer\",\"custom_customer_type1\",\"=\",\"End User\"]]",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_dqon",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "consultant",
+   "fieldtype": "Link",
+   "label": "Consultant",
+   "link_filters": "[[\"Customer\",\"custom_customer_type1\",\"=\",\"Consultant\"]]",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "expected_offer_date",
+   "fieldtype": "Date",
+   "label": "Expected Offer Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reference",
+   "fieldtype": "Link",
+   "label": "Reference ",
+   "options": "Visit"
+  },
+  {
+   "fieldname": "column_break_kbun",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer_enquiry_ref_no",
+   "fieldtype": "Data",
+   "label": "Customer Enquiry Ref No"
+  },
+  {
+   "fieldname": "section_break_cwvw",
+   "fieldtype": "Section Break",
+   "label": "Project Details"
+  },
+  {
+   "fieldname": "project_name",
+   "fieldtype": "Data",
+   "label": "Project Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_ggym",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "project_country",
+   "fieldtype": "Link",
+   "label": "Project Country",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "project_location",
+   "fieldtype": "Data",
+   "label": "Project Location"
+  },
+  {
+   "fieldname": "column_break_zufd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "project_type",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Project Type",
+   "options": "\nNew\nExpansion\nRetrofit\nSpares"
+  },
+  {
+   "fieldname": "project_type_radio",
+   "fieldtype": "HTML",
+   "label": "Project Type Radio",
+   "options": "<h5 style=\"margin-bottom: 8px;\">\n  Project Type <span style=\"color:red;\">*</span>\n</h5>\n\n<div>\n  <label>\n    <input type=\"radio\" name=\"ptype\" value=\"New\" required> New\n  </label><br>\n\n  <label>\n    <input type=\"radio\" name=\"ptype\" value=\"Expansion\"> Expansion\n  </label><br>\n\n  <label>\n    <input type=\"radio\" name=\"ptype\" value=\"Retrofit\"> Retrofit\n  </label><br>\n\n  <label>\n    <input type=\"radio\" name=\"ptype\" value=\"Spares\"> Spares\n  </label>\n</div>\n"
+  },
+  {
+   "fieldname": "section_break_cuof",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description",
+   "max_height": "150px",
+   "reqd": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_jnjr",
+   "fieldtype": "Section Break",
+   "label": "Special Requirement"
+  },
+  {
+   "fieldname": "special_requirement",
+   "fieldtype": "Text Editor",
+   "max_height": "150px"
+  },
+  {
+   "fieldname": "contact_details_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "table_ogtz",
+   "fieldtype": "Table",
+   "label": "Contact Person",
+   "no_copy": 1,
+   "options": "Contact Person",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_xxgd",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "attachments",
+   "fieldtype": "Table",
+   "label": "Attachments",
+   "no_copy": 1,
+   "options": "Document Attachments"
+  },
+  {
+   "fieldname": "section_break_sljd",
+   "fieldtype": "Section Break",
+   "read_only": 1
+  },
+  {
+   "fieldname": "table_xlzm",
+   "fieldtype": "Table",
+   "label": "Assignment Log",
+   "no_copy": 1,
+   "options": "Assignment Log",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tab_2_tab",
+   "fieldtype": "Tab Break",
+   "label": "Reason"
+  },
+  {
+   "depends_on": "eval: doc.workflow_state == \"Regret\"",
+   "fieldname": "reason_for_regret",
+   "fieldtype": "Small Text",
+   "label": "Regret Reason"
+  },
+  {
+   "depends_on": "eval: doc.workflow_state == \"Unclear\"",
+   "fieldname": "doubts__clarification_needed",
+   "fieldtype": "Small Text",
+   "label": "Doubts / Clarification Needed"
+  },
+  {
+   "fetch_from": "created_by.primary_organisation",
+   "fieldname": "primary_organisation",
+   "fieldtype": "Link",
+   "label": "Primary Organisation",
+   "options": "Organisation"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-01-30 23:41:40.427189",
+ "modified_by": "Administrator",
+ "module": "Enquiry Management",
+ "name": "Enquiry",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Normal",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [
+  {
+   "color": "Red",
+   "title": "Draft"
+  },
+  {
+   "color": "Blue",
+   "title": "Open"
+  },
+  {
+   "color": "Green",
+   "title": "Offer"
+  },
+  {
+   "color": "Yellow",
+   "title": "Unclear"
+  },
+  {
+   "color": "Orange",
+   "title": "Regret"
+  }
+ ],
+ "track_changes": 1
+}

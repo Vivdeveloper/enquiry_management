@@ -1,0 +1,91 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:segment",
+ "creation": "2025-12-13 11:11:37.005250",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "segment",
+  "lft",
+  "rgt",
+  "is_group",
+  "old_parent",
+  "parent_segment"
+ ],
+ "fields": [
+  {
+   "fieldname": "segment",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Segment",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Left",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Right",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "label": "Is Group"
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Link",
+   "label": "Old Parent",
+   "options": "Segment"
+  },
+  {
+   "fieldname": "parent_segment",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Parent Segment",
+   "options": "Segment"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_tree": 1,
+ "links": [],
+ "modified": "2026-01-23 15:59:43.589763",
+ "modified_by": "Administrator",
+ "module": "Enquiry Management",
+ "name": "Segment",
+ "naming_rule": "By fieldname",
+ "nsm_parent_field": "parent_segment",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

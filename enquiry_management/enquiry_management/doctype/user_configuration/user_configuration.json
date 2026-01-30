@@ -1,0 +1,138 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:user",
+ "creation": "2026-01-23 15:23:18.776620",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "user",
+  "section_break_rdpa",
+  "self_creator",
+  "column_break_pzjr",
+  "head",
+  "section_break_pomd",
+  "department",
+  "reporting_tos",
+  "primary_organisation",
+  "organisations",
+  "column_break_khtt",
+  "segments",
+  "sub_segments"
+ ],
+ "fields": [
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "User",
+   "options": "User",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_khtt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "organisations",
+   "fieldtype": "Table",
+   "label": "Organisations",
+   "options": "User Configuration Organisation"
+  },
+  {
+   "fieldname": "segments",
+   "fieldtype": "Table",
+   "label": "Segments",
+   "options": "User Configuration Segment"
+  },
+  {
+   "fieldname": "sub_segments",
+   "fieldtype": "Table",
+   "label": "Sub Segments",
+   "options": "User Configuration Sub Segment"
+  },
+  {
+   "fieldname": "section_break_pomd",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "reporting_tos",
+   "fieldtype": "Table",
+   "label": "Reporting To's",
+   "options": "User Configuration Reporting To"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department",
+   "reqd": 1
+  },
+  {
+   "fieldname": "primary_organisation",
+   "fieldtype": "Link",
+   "label": "Primary Organisation",
+   "options": "Organisation",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "description": "If Created by Owner Restictions",
+   "fieldname": "self_creator",
+   "fieldtype": "Check",
+   "label": "Self Creator"
+  },
+  {
+   "fieldname": "section_break_rdpa",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_pzjr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "head",
+   "fieldtype": "Check",
+   "label": "Head "
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-01-30 12:56:26.923463",
+ "modified_by": "Administrator",
+ "module": "Enquiry Management",
+ "name": "User Configuration",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Normal",
+   "share": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
