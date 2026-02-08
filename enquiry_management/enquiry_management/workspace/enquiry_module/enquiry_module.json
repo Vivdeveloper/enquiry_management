@@ -1,0 +1,80 @@
+{
+ "charts": [
+  {
+   "chart_name": "Enquiries by Status",
+   "label": "Open Enquiries"
+  },
+  {
+   "chart_name": "Enquiries by Day",
+   "label": "Enquiries by Day"
+  }
+ ],
+ "content": "[{\"id\":\"4gEg0QiJe4\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Enquiry Module</span>\",\"col\":12}},{\"id\":\"iELa1Zrpel\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Add New Enquiry\",\"col\":3}},{\"id\":\"R1kNycNQs9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Enquiry\",\"col\":3}},{\"id\":\"Bbt8L3amdt\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Enquiry Assignment Log\",\"col\":3}},{\"id\":\"7U4TuvquND\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"aoNe5jQ_aM\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open\",\"col\":3}},{\"id\":\"D-tvIvHOQ-\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Offer\",\"col\":3}},{\"id\":\"FXVl-9Hx5v\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Unclear\",\"col\":3}},{\"id\":\"_ATxW4Jan9\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Regret\",\"col\":3}},{\"id\":\"cAroA8h-2H\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Open Enquiries\",\"col\":6}},{\"id\":\"16UV1yoWYJ\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Enquiries by Day\",\"col\":6}},{\"id\":\"WnaM0VFecR\",\"type\":\"spacer\",\"data\":{\"col\":12}}]",
+ "creation": "2025-12-13 22:12:36.292824",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "color-review-points",
+ "idx": 2,
+ "indicator_color": "",
+ "is_hidden": 0,
+ "label": "Enquiry Module",
+ "links": [],
+ "modified": "2026-02-08 15:21:15.811260",
+ "modified_by": "Administrator",
+ "module": "Enquiry Management",
+ "name": "Enquiry Module",
+ "number_cards": [
+  {
+   "label": "Offer",
+   "number_card_name": "Offer Count"
+  },
+  {
+   "label": "Unclear",
+   "number_card_name": "Unclear Count"
+  },
+  {
+   "label": "Open",
+   "number_card_name": "Open Count"
+  },
+  {
+   "label": "Regret",
+   "number_card_name": "Regret Count"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 1.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Enquiry Assignment Log",
+   "link_to": "Enquiry Assignment Log",
+   "report_ref_doctype": "ToDo",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "Add New Enquiry",
+   "link_to": "Enquiry",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Enquiry",
+   "link_to": "Enquiry",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Enquiry Module"
+}
