@@ -7,10 +7,6 @@
  "engine": "InnoDB",
  "field_order": [
   "user",
-  "section_break_rdpa",
-  "self_creator",
-  "column_break_pzjr",
-  "head",
   "section_break_pomd",
   "department",
   "reporting_tos",
@@ -75,33 +71,12 @@
    "label": "Primary Organisation",
    "options": "Organisation",
    "reqd": 1
-  },
-  {
-   "default": "0",
-   "description": "If Created by Owner Restictions",
-   "fieldname": "self_creator",
-   "fieldtype": "Check",
-   "label": "Self Creator"
-  },
-  {
-   "fieldname": "section_break_rdpa",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_pzjr",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "0",
-   "fieldname": "head",
-   "fieldtype": "Check",
-   "label": "Head "
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-30 12:56:26.923463",
+ "modified": "2026-02-08 12:06:53.421308",
  "modified_by": "Administrator",
  "module": "Enquiry Management",
  "name": "User Configuration",

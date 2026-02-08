@@ -6,8 +6,19 @@ frappe.listview_settings['Enquiry'] = {
 				method: 'enquiry_management.enquiry_management.doctype.enquiry.enquiry.get_permission_info',
 				callback: function(r) {
 					if (r.message) {
+						let colors = {
+							'Administrator': { bg: '#e8f5e9', text: '#2e7d32', border: '#a5d6a7' },
+							'Normal': { bg: '#e3f2fd', text: '#1565c0', border: '#90caf9' },
+							'Head': { bg: '#fff3e0', text: '#e65100', border: '#ffcc80' }
+						};
+						let role_tags = (r.message.roles || []).map(function(role) {
+							let c = colors[role] || { bg: '#f5f5f5', text: '#616161', border: '#bdbdbd' };
+							return `<span style="background:${c.bg};color:${c.text};border:1px solid ${c.border};padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600;margin-right:6px;">${role}</span>`;
+						}).join('') || 'None';
+
 						let content = `<div style="padding: 10px;">
 							<p><strong>User:</strong> ${r.message.user}</p>
+							<p><strong>Applying Permission:</strong> ${role_tags}</p>
 							<hr>
 							<p><strong>Active Permission Rules:</strong></p>
 							<ul style="margin-left: 20px;">

@@ -45,9 +45,11 @@ class Enquiry(Document):
 def get_permission_query_conditions(user):
 	"""
 	Permission query for Enquiry.
-	If self_creator = 1:
-		- created_by + segment/sub_segment/org must match, OR
-		- assigned_user (no restriction)
+	Checks the user's Frappe role:
+		- Any role: created_by always visible to the creator
+		- Normal role: created_by + segment/sub_segment/org must match
+		- Head role: can see all enquiries matching segments/sub_segments/orgs
+		- assigned_user and reporting_tos always apply
 	"""
 	if not user:
 		user = frappe.session.user
@@ -55,52 +57,123 @@ def get_permission_query_conditions(user):
 	if user == "Administrator":
 		return None
 
+	user_roles = frappe.get_roles(user)
+
+	if "System Manager" in user_roles:
+		return None
+
 	escaped_user = frappe.db.escape(user)
 
-	# Segment match subquery
-	segment_match = f"""
-		`tabEnquiry`.`segment` IN (
-			SELECT `segment`
-			FROM `tabUser Configuration Segment`
-			WHERE `parent` IN (
-				SELECT `name` FROM `tabUser Configuration`
-				WHERE `user` = {escaped_user} AND `self_creator` = 1
-			)
+	conditions = []
+
+	# Any role - user can always see enquiries they created
+	created_by_match = f"""
+		`tabEnquiry`.`created_by` IN (
+			SELECT `name` FROM `tabUser Configuration`
+			WHERE `user` = {escaped_user}
 		)
 	"""
+	conditions.append(f"({created_by_match})")
 
-	# Sub-segment match subquery
-	sub_segment_match = f"""
-		`tabEnquiry`.`sub_segment` IN (
-			SELECT `sub_segment`
-			FROM `tabUser Configuration Sub Segment`
-			WHERE `parent` IN (
-				SELECT `name` FROM `tabUser Configuration`
-				WHERE `user` = {escaped_user} AND `self_creator` = 1
-			)
-		)
-	"""
-
-	# Organisation match subquery
-	org_match = f"""
-		(
-			`tabEnquiry`.`primary_organisation` IN (
-				SELECT `primary_organisation`
-				FROM `tabUser Configuration`
-				WHERE `user` = {escaped_user} AND `self_creator` = 1
-			)
-			OR `tabEnquiry`.`primary_organisation` IN (
-				SELECT `organisation`
-				FROM `tabUser Configuration Organisation`
+	# Normal role - can see own created enquiries matching segments/sub_segments/orgs
+	if "Normal" in user_roles:
+		segment_match = f"""
+			`tabEnquiry`.`segment` IN (
+				SELECT `segment`
+				FROM `tabUser Configuration Segment`
 				WHERE `parent` IN (
 					SELECT `name` FROM `tabUser Configuration`
-					WHERE `user` = {escaped_user} AND `self_creator` = 1
+					WHERE `user` = {escaped_user}
 				)
 			)
-		)
-	"""
+		"""
 
-	# Assigned user check subquery
+		sub_segment_match = f"""
+			`tabEnquiry`.`sub_segment` IN (
+				SELECT `sub_segment`
+				FROM `tabUser Configuration Sub Segment`
+				WHERE `parent` IN (
+					SELECT `name` FROM `tabUser Configuration`
+					WHERE `user` = {escaped_user}
+				)
+			)
+		"""
+
+		org_match = f"""
+			(
+				`tabEnquiry`.`primary_organisation` IN (
+					SELECT `primary_organisation`
+					FROM `tabUser Configuration`
+					WHERE `user` = {escaped_user}
+				)
+				OR `tabEnquiry`.`primary_organisation` IN (
+					SELECT `organisation`
+					FROM `tabUser Configuration Organisation`
+					WHERE `parent` IN (
+						SELECT `name` FROM `tabUser Configuration`
+						WHERE `user` = {escaped_user}
+					)
+				)
+			)
+		"""
+
+		normal_created_by = f"""
+			`tabEnquiry`.`created_by` IN (
+				SELECT `name` FROM `tabUser Configuration`
+				WHERE `user` = {escaped_user}
+			)
+		"""
+		conditions.append(f"({normal_created_by} AND {segment_match})")
+		conditions.append(f"({normal_created_by} AND {sub_segment_match})")
+		conditions.append(f"({normal_created_by} AND {org_match})")
+
+	# Head role - can see all enquiries matching segments/sub_segments/orgs
+	if "Head" in user_roles:
+		head_segment_match = f"""
+			`tabEnquiry`.`segment` IN (
+				SELECT `segment`
+				FROM `tabUser Configuration Segment`
+				WHERE `parent` IN (
+					SELECT `name` FROM `tabUser Configuration`
+					WHERE `user` = {escaped_user}
+				)
+			)
+		"""
+
+		head_sub_segment_match = f"""
+			`tabEnquiry`.`sub_segment` IN (
+				SELECT `sub_segment`
+				FROM `tabUser Configuration Sub Segment`
+				WHERE `parent` IN (
+					SELECT `name` FROM `tabUser Configuration`
+					WHERE `user` = {escaped_user}
+				)
+			)
+		"""
+
+		head_org_match = f"""
+			(
+				`tabEnquiry`.`primary_organisation` IN (
+					SELECT `primary_organisation`
+					FROM `tabUser Configuration`
+					WHERE `user` = {escaped_user}
+				)
+				OR `tabEnquiry`.`primary_organisation` IN (
+					SELECT `organisation`
+					FROM `tabUser Configuration Organisation`
+					WHERE `parent` IN (
+						SELECT `name` FROM `tabUser Configuration`
+						WHERE `user` = {escaped_user}
+					)
+				)
+			)
+		"""
+
+		conditions.append(f"({head_segment_match} AND {head_org_match})")
+		conditions.append(f"({head_sub_segment_match} AND {head_org_match})")
+		conditions.append(f"({head_org_match})")
+
+	# Assigned user - always applies
 	is_assigned = f"""
 		`tabEnquiry`.`name` IN (
 			SELECT `parent`
@@ -109,11 +182,12 @@ def get_permission_query_conditions(user):
 			AND `parenttype` = 'Enquiry'
 		)
 	"""
+	conditions.append(f"({is_assigned})")
 
 	# Reporting tos - current user can see all data from users who report to them
 	reporting_tos_match = f"""
 		`tabEnquiry`.`created_by` IN (
-			SELECT uc.`user`
+			SELECT uc.`name`
 			FROM `tabUser Configuration` uc
 			WHERE uc.`name` IN (
 				SELECT `parent`
@@ -122,68 +196,9 @@ def get_permission_query_conditions(user):
 			)
 		)
 	"""
+	conditions.append(f"({reporting_tos_match})")
 
-	# Head - can see all enquiries matching their segments
-	head_segment_match = f"""
-		`tabEnquiry`.`segment` IN (
-			SELECT `segment`
-			FROM `tabUser Configuration Segment`
-			WHERE `parent` IN (
-				SELECT `name` FROM `tabUser Configuration`
-				WHERE `user` = {escaped_user} AND `head` = 1
-			)
-		)
-	"""
-
-	# Head - can see all enquiries matching their sub_segments
-	head_sub_segment_match = f"""
-		`tabEnquiry`.`sub_segment` IN (
-			SELECT `sub_segment`
-			FROM `tabUser Configuration Sub Segment`
-			WHERE `parent` IN (
-				SELECT `name` FROM `tabUser Configuration`
-				WHERE `user` = {escaped_user} AND `head` = 1
-			)
-		)
-	"""
-
-	# Head - can see all enquiries matching their primary_organisation and organisations
-	head_org_match = f"""
-		(
-			`tabEnquiry`.`primary_organisation` IN (
-				SELECT `primary_organisation`
-				FROM `tabUser Configuration`
-				WHERE `user` = {escaped_user} AND `head` = 1
-			)
-			OR `tabEnquiry`.`primary_organisation` IN (
-				SELECT `organisation`
-				FROM `tabUser Configuration Organisation`
-				WHERE `parent` IN (
-					SELECT `name` FROM `tabUser Configuration`
-					WHERE `user` = {escaped_user} AND `head` = 1
-				)
-			)
-		)
-	"""
-
-	return f"""(
-		/* created_by + segment */
-		(`tabEnquiry`.`created_by` = {escaped_user} AND {segment_match})
-		/* created_by + sub_segment */
-		OR (`tabEnquiry`.`created_by` = {escaped_user} AND {sub_segment_match})
-		/* created_by + org */
-		OR (`tabEnquiry`.`created_by` = {escaped_user} AND {org_match})
-		/* assigned_user - no restriction */
-		OR ({is_assigned})
-		/* reporting_tos - can see all data from users who report to them */
-		OR ({reporting_tos_match})
-		/* head - can see all enquiries matching their segments */
-		OR ({head_segment_match})
-		/* head - can see all enquiries matching their sub_segments */
-		OR ({head_sub_segment_match})
-		/* head - can see all enquiries matching their organisations */
-		OR ({head_org_match})
-	)"""
+	return f"({' OR '.join(conditions)})"
 
 
 @frappe.whitelist()
@@ -192,115 +207,73 @@ def get_permission_info():
 	user = frappe.session.user
 	permissions = []
 
-	if user == "Administrator":
-		return {"user": user, "permissions": ["Full Access (Administrator)"]}
+	if user == "Administrator" or "System Manager" in frappe.get_roles(user):
+		return {"user": user, "roles": ["Administrator"], "permissions": ["Full Access"]}
 
 	# Check User Configuration
 	user_config = frappe.db.get_value(
 		"User Configuration",
 		{"user": user},
-		["name", "self_creator", "head", "primary_organisation"],
+		["name", "primary_organisation"],
 		as_dict=True
 	)
 
 	if not user_config:
 		permissions.append("No User Configuration found - limited access")
-		return {"user": user, "permissions": permissions}
+		return {"user": user, "roles": [], "permissions": permissions}
 
-	# Self creator permissions
-	if user_config.self_creator:
-		permissions.append("Self Creator: Can see own created enquiries matching segments/sub-segments/organisations")
+	user_roles = frappe.get_roles(user)
 
-		# Get segments
-		segments = frappe.get_all(
-			"User Configuration Segment",
-			filters={"parent": user_config.name},
-			pluck="segment",
-			ignore_permissions=True
-		)
-		if segments:
-			permissions.append(f"  - Segments: {', '.join(segments)}")
+	# Collect active permission roles
+	active_roles = []
+	if "Head" in user_roles:
+		active_roles.append("Head")
+	if "Normal" in user_roles:
+		active_roles.append("Normal")
 
-		# Get sub-segments
-		sub_segments = frappe.get_all(
-			"User Configuration Sub Segment",
-			filters={"parent": user_config.name},
-			pluck="sub_segment",
-			ignore_permissions=True
-		)
-		if sub_segments:
-			permissions.append(f"  - Sub Segments: {', '.join(sub_segments)}")
+	# Get user configuration details
+	segments = frappe.get_all(
+		"User Configuration Segment",
+		filters={"parent": user_config.name},
+		pluck="segment",
+		ignore_permissions=True
+	)
+	sub_segments = frappe.get_all(
+		"User Configuration Sub Segment",
+		filters={"parent": user_config.name},
+		pluck="sub_segment",
+		ignore_permissions=True
+	)
+	orgs = []
+	if user_config.primary_organisation:
+		orgs.append(user_config.primary_organisation)
+	child_orgs = frappe.get_all(
+		"User Configuration Organisation",
+		filters={"parent": user_config.name},
+		pluck="organisation",
+		ignore_permissions=True
+	)
+	orgs.extend(child_orgs)
 
-		# Get organisations
-		orgs = frappe.get_all(
-			"User Configuration Organisation",
-			filters={"parent": user_config.name},
-			pluck="organisation",
-			ignore_permissions=True
-		)
-		if user_config.primary_organisation:
-			orgs.insert(0, user_config.primary_organisation)
-		if orgs:
-			permissions.append(f"  - Organisations: {', '.join(orgs)}")
+	# Build simple permission summary
+	permissions.append("Your Created Enquiries: Always visible")
 
-	# Head permissions
-	if user_config.head:
-		permissions.append("Head: Can see all enquiries matching segments/sub-segments/organisations")
+	if segments:
+		permissions.append(f"Segments: {', '.join(segments)}")
+	if sub_segments:
+		permissions.append(f"Sub Segments: {', '.join(sub_segments)}")
+	if orgs:
+		permissions.append(f"Organisations: {', '.join(orgs)}")
 
-		# Get segments for head
-		head_segments = frappe.get_all(
-			"User Configuration Segment",
-			filters={"parent": user_config.name},
-			pluck="segment",
-			ignore_permissions=True
-		)
-		if head_segments:
-			permissions.append(f"  - Segments: {', '.join(head_segments)}")
-		else:
-			permissions.append("  - Segments: None configured")
-
-		# Get sub-segments for head
-		head_sub_segments = frappe.get_all(
-			"User Configuration Sub Segment",
-			filters={"parent": user_config.name},
-			pluck="sub_segment",
-			ignore_permissions=True
-		)
-		if head_sub_segments:
-			permissions.append(f"  - Sub Segments: {', '.join(head_sub_segments)}")
-		else:
-			permissions.append("  - Sub Segments: None configured")
-
-		# Get organisations for head
-		head_orgs = []
-		if user_config.primary_organisation:
-			head_orgs.append(user_config.primary_organisation)
-
-		# Get multiple organisations from child table
-		child_orgs = frappe.get_all(
-			"User Configuration Organisation",
-			filters={"parent": user_config.name},
-			pluck="organisation",
-			ignore_permissions=True
-		)
-		head_orgs.extend(child_orgs)
-
-		if head_orgs:
-			permissions.append(f"  - Organisations: {', '.join(head_orgs)}")
-		else:
-			permissions.append("  - Organisations: None configured")
-
-	# Assignment Log - show assigned enquiries count
+	# Assigned enquiries
 	assigned_count = frappe.db.count(
 		"Assignment Log",
 		{"assigned_user": user, "parenttype": "Enquiry"}
 	)
 	if assigned_count:
-		permissions.append(f"Assigned Enquiries: {assigned_count} enquiries assigned to you")
-	else:
-		permissions.append("Assigned Enquiries: No enquiries assigned to you")
+		permissions.append(f"Assigned to You: {assigned_count}")
 
-	# Reporting To - users who report to current user
+	# Reporting users
 	reporting_users = frappe.db.sql("""
 		SELECT uc.user
 		FROM `tabUser Configuration` uc
@@ -310,12 +283,11 @@ def get_permission_info():
 			WHERE reporting_to = %s
 		)
 	""", user, as_dict=True)
-
 	if reporting_users:
 		user_list = [r.user for r in reporting_users]
-		permissions.append(f"Reporting To You: Can see enquiries from {', '.join(user_list)}")
+		permissions.append(f"Team: {', '.join(user_list)}")
 
-	return {"user": user, "permissions": permissions}
+	return {"user": user, "roles": active_roles, "permissions": permissions}
 
 
 @frappe.whitelist()

@@ -90,7 +90,7 @@ frappe.ui.form.on('Enquiry', {
 								doctype: frm.doc.doctype,
 								name: frm.doc.name,
 								reason: values.reason,
-								current_owner: frm.doc.created_by
+								current_owner: frm.doc.owner
 							},
 							callback() {
 								frm.reload_doc();
