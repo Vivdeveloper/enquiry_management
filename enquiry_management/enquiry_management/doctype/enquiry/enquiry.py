@@ -409,7 +409,33 @@ def assign_enquiry(name, assign_user, priority="Medium", description=None):
 
 
 @frappe.whitelist()
-def reassign_enquiry_direct(doctype, name, target_user, description=None):
+def mark_unclear(doctype, name, reason, current_owner):
+	"""Mark enquiry as Unclear and assign back to creator."""
+	doc = frappe.get_doc(doctype, name)
+
+	# Reason
+	doc.db_set("doubts__clarification_needed", reason, update_modified=False)
+
+	# Log Entry
+	row = doc.append("table_xlzm", {})
+	row.assignment_description = reason
+	row.assignment_status = "Unclear"
+	row.assigned_on = frappe.utils.now_datetime()
+	row.assigned_user = current_owner
+
+	doc.save(ignore_permissions=True)
+
+	# Ownership + State
+	doc.db_set("current_owner", current_owner, update_modified=False)
+	doc.db_set("workflow_state", "Unclear", update_modified=True)
+	doc.db_set("status", "Unclear", update_modified=True)
+
+	frappe.db.commit()
+	return {"success": True}
+
+
+@frappe.whitelist()
+def reassign_enquiry(doctype, name, target_user, current_owner=None, description=None):
 	"""Reassign enquiry to a target user and reopen."""
 	doc = frappe.get_doc(doctype, name)
 
@@ -426,36 +452,6 @@ def reassign_enquiry_direct(doctype, name, target_user, description=None):
 	doc.db_set("current_owner", target_user, update_modified=False)
 	doc.db_set("workflow_state", "Open", update_modified=True)
 	doc.db_set("status", "Open", update_modified=True)
-
-	frappe.db.commit()
-	return {"success": True}
-
-
-@frappe.whitelist()
-def mark_unclear_direct(doctype, name, reason, current_owner):
-	"""Mark enquiry as Unclear and assign back to creator."""
-	doc = frappe.get_doc(doctype, name)
-
-	# Reason
-	doc.db_set(
-		"doubts__clarification_needed",
-		reason,
-		update_modified=False
-	)
-
-	# Log Entry
-	row = doc.append("table_xlzm", {})
-	row.assignment_description = reason
-	row.assignment_status = "Unclear"
-	row.assigned_on = frappe.utils.now_datetime()
-	row.assigned_user = current_owner
-
-	doc.save(ignore_permissions=True)
-
-	# Ownership + State
-	doc.db_set("current_owner", current_owner, update_modified=False)
-	doc.db_set("workflow_state", "Unclear", update_modified=True)
-	doc.db_set("status", "Unclear", update_modified=True)
 
 	frappe.db.commit()
 	return {"success": True}

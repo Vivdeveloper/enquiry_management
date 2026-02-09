@@ -1,6 +1,5 @@
 {
  "actions": [],
- "allow_rename": 1,
  "autoname": "field:segment",
  "creation": "2025-12-13 11:11:37.005250",
  "doctype": "DocType",
@@ -62,7 +61,7 @@
  "index_web_pages_for_search": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2026-02-08 12:54:16.217930",
+ "modified": "2026-02-10 01:13:33.598306",
  "modified_by": "Administrator",
  "module": "Enquiry Management",
  "name": "Segment",

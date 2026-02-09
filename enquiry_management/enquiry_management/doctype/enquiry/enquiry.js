@@ -4,6 +4,7 @@
 frappe.ui.form.on('Enquiry', {
 	refresh: function(frm) {
 		set_customer_filter_enq(frm);
+		set_segment_filters(frm);
 
 		// Execute only for new documents
 		if (frm.is_new() && !frm.doc.current_owner) {
@@ -50,19 +51,6 @@ frappe.ui.form.on('Enquiry', {
 			}).addClass('btn-primary');
 		}
 
-		if (frm.doc.status === "Open") {
-			frm.page.remove_menu_item(__('Cancel'));
-			if (frm.page.btn_primary) {
-				frm.page.btn_primary.hide();
-			}
-			frm.page.wrapper
-				.find('button.btn.btn-secondary.btn-default.btn-sm')
-				.filter(function() {
-					return $(this).text().trim() === __('Cancel');
-				})
-				.hide();
-		}
-
 		const is_current_owner = frm.doc.current_owner === frappe.session.user;
 		const is_creator = frm.doc.created_by === frappe.session.user;
 
@@ -85,12 +73,12 @@ frappe.ui.form.on('Enquiry', {
 					],
 					function(values) {
 						frappe.call({
-							method: "enquiry_management.enquiry_management.doctype.enquiry.enquiry.mark_unclear_direct",
+							method: "enquiry_management.enquiry_management.doctype.enquiry.enquiry.mark_unclear",
 							args: {
 								doctype: frm.doc.doctype,
 								name: frm.doc.name,
 								reason: values.reason,
-								current_owner: frm.doc.owner
+								current_owner: frm.doc.created_by
 							},
 							callback() {
 								frm.reload_doc();
@@ -135,7 +123,7 @@ frappe.ui.form.on('Enquiry', {
 							}
 
 							frappe.call({
-								method: "enquiry_management.enquiry_management.doctype.enquiry.enquiry.reassign_enquiry_direct",
+								method: "enquiry_management.enquiry_management.doctype.enquiry.enquiry.reassign_enquiry",
 								args: {
 									doctype: frm.doc.doctype,
 									name: frm.doc.name,
@@ -160,6 +148,26 @@ frappe.ui.form.on('Enquiry', {
 		} else {
 			frm.remove_custom_button("Reassign");
 		}
+
+		// Hide Cancel button for Open status
+		try {
+			if (frm.doc.status === "Open") {
+				if (frm.page.remove_menu_item) {
+					frm.page.remove_menu_item(__('Cancel'));
+				}
+				if (frm.page.btn_primary) {
+					frm.page.btn_primary.hide();
+				}
+				frm.page.wrapper
+					.find('button.btn.btn-secondary.btn-default.btn-sm')
+					.filter(function() {
+						return $(this).text().trim() === __('Cancel');
+					})
+					.hide();
+			}
+		} catch (e) {
+			console.error("Error hiding cancel button:", e);
+		}
 	},
 
 	customer_type: function(frm) {
@@ -172,6 +180,17 @@ frappe.ui.form.on('Enquiry', {
 		if (frm.doc.customer_type === "End User" && frm.doc.customer_name) {
 			frm.set_value('end_user_name', frm.doc.customer_name);
 		}
+	},
+
+	segment: function(frm) {
+		frm.set_value('sub_segment', null);
+		frm.set_value('sub_sub_segment', null);
+		set_segment_filters(frm);
+	},
+
+	sub_segment: function(frm) {
+		frm.set_value('sub_sub_segment', null);
+		set_segment_filters(frm);
 	}
 });
 
@@ -183,6 +202,41 @@ function set_customer_filter_enq(frm) {
 		return {
 			filters: {
 				custom_customer_type1: frm.doc.customer_type
+			}
+		};
+	});
+}
+
+function set_segment_filters(frm) {
+	// Level 1: root segments (no parent)
+	frm.set_query('segment', function() {
+		return {
+			filters: {
+				parent_segment: ['in', ['', null]]
+			}
+		};
+	});
+
+	// Level 2: children of selected segment
+	frm.set_query('sub_segment', function() {
+		if (!frm.doc.segment) {
+			return { filters: { name: ['in', ['__none__']] } };
+		}
+		return {
+			filters: {
+				parent_segment: frm.doc.segment
+			}
+		};
+	});
+
+	// Level 3: children of selected sub_segment
+	frm.set_query('sub_sub_segment', function() {
+		if (!frm.doc.sub_segment) {
+			return { filters: { name: ['in', ['__none__']] } };
+		}
+		return {
+			filters: {
+				parent_segment: frm.doc.sub_segment
 			}
 		};
 	});
