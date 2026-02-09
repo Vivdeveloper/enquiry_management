@@ -1,13 +1,14 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "naming_series:",
  "creation": "2025-12-13 11:35:43.680880",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "section_break_wd6n",
   "amended_from",
-  "series",
+  "naming_series",
   "consultant_name",
   "email",
   "mobile_no",
@@ -29,12 +30,6 @@
    "search_index": 1
   },
   {
-   "fieldname": "series",
-   "fieldtype": "Select",
-   "label": "Series",
-   "options": "CO-#####"
-  },
-  {
    "fieldname": "consultant_name",
    "fieldtype": "Data",
    "label": "Consultant Name"
@@ -54,16 +49,23 @@
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "CO-#####"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-02-10 02:34:04.695376",
+ "modified": "2026-02-10 02:40:47.802771",
  "modified_by": "Administrator",
  "module": "Enquiry Management",
  "name": "Consultant",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "kartik@exacuer.com",
  "permissions": [
   {
