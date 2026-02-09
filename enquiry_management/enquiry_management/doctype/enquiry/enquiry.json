@@ -196,7 +196,6 @@
    "fieldname": "end_user_name",
    "fieldtype": "Link",
    "label": "End User Name",
-   "link_filters": "[[\"Customer\",\"custom_customer_type1\",\"=\",\"End User\"]]",
    "options": "Customer",
    "reqd": 1
   },
@@ -208,7 +207,6 @@
    "fieldname": "consultant",
    "fieldtype": "Link",
    "label": "Consultant",
-   "link_filters": "[[\"Customer\",\"custom_customer_type1\",\"=\",\"Consultant\"]]",
    "options": "Customer",
    "reqd": 1
   },
@@ -371,7 +369,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-02-10 02:52:10.646597",
+ "modified": "2026-02-10 03:00:55.414078",
  "modified_by": "Administrator",
  "module": "Enquiry Management",
  "name": "Enquiry",
