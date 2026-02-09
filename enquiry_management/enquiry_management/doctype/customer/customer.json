@@ -12,16 +12,11 @@
  "field_order": [
   "basic_info",
   "naming_series",
-  "salutation",
   "customer_name",
   "customer_type",
   "customer_group",
   "column_break0",
-  "more_info",
-  "column_break_iheg",
-  "column_break_45",
-  "customer_details",
-  "dashboard_tab"
+  "customer_details"
  ],
  "fields": [
   {
@@ -37,13 +32,6 @@
    "no_copy": 1,
    "options": "CUST-.YYYY.-",
    "set_only_once": 1
-  },
-  {
-   "depends_on": "eval:doc.customer_type!='Company'",
-   "fieldname": "salutation",
-   "fieldtype": "Link",
-   "label": "Salutation",
-   "options": "Salutation"
   },
   {
    "bold": 1,
@@ -84,42 +72,19 @@
    "width": "50%"
   },
   {
-   "collapsible": 1,
-   "collapsible_depends_on": "customer_details",
-   "fieldname": "more_info",
-   "fieldtype": "Section Break",
-   "label": "More Information",
-   "oldfieldtype": "Section Break",
-   "options": "fa fa-file-text"
-  },
-  {
-   "fieldname": "column_break_45",
-   "fieldtype": "Column Break"
-  },
-  {
    "description": "Additional information regarding the customer.",
    "fieldname": "customer_details",
    "fieldtype": "Text",
    "label": "Customer Details",
    "oldfieldname": "customer_details",
    "oldfieldtype": "Code"
-  },
-  {
-   "fieldname": "dashboard_tab",
-   "fieldtype": "Tab Break",
-   "label": "Dashboard",
-   "show_dashboard": 1
-  },
-  {
-   "fieldname": "column_break_iheg",
-   "fieldtype": "Column Break"
   }
  ],
  "icon": "fa fa-user",
  "idx": 363,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-02-08 12:52:33.250218",
+ "modified": "2026-02-10 02:53:23.331464",
  "modified_by": "Administrator",
  "module": "Enquiry Management",
  "name": "Customer",

@@ -7,12 +7,13 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_wd6n",
-  "amended_from",
-  "naming_series",
   "consultant_name",
   "email",
   "mobile_no",
-  "company"
+  "column_break_jkzv",
+  "company",
+  "naming_series",
+  "amended_from"
  ],
  "fields": [
   {
@@ -55,13 +56,17 @@
    "fieldtype": "Select",
    "label": "Series",
    "options": "CO-#####"
+  },
+  {
+   "fieldname": "column_break_jkzv",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-02-10 02:40:47.802771",
+ "modified": "2026-02-10 02:54:13.816240",
  "modified_by": "Administrator",
  "module": "Enquiry Management",
  "name": "Consultant",

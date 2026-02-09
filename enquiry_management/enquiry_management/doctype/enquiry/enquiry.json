@@ -1,10 +1,12 @@
 {
  "actions": [],
+ "autoname": "naming_series:",
  "creation": "2025-12-13 11:09:27.156641",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "section_break_czhy",
+  "naming_series",
   "amended_from",
   "status",
   "column_break_lmjm",
@@ -357,16 +359,23 @@
    "label": "Primary Organisation",
    "no_copy": 1,
    "options": "Organisation"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "naming_series",
+   "options": "EN"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-02-10 00:43:00.691463",
+ "modified": "2026-02-10 02:52:10.646597",
  "modified_by": "Administrator",
  "module": "Enquiry Management",
  "name": "Enquiry",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
