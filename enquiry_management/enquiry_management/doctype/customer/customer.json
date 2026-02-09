@@ -13,7 +13,7 @@
   "basic_info",
   "naming_series",
   "customer_name",
-  "customer_type",
+  "type_customer",
   "customer_group",
   "column_break0",
   "customer_details"
@@ -46,16 +46,6 @@
    "search_index": 1
   },
   {
-   "default": "Company",
-   "fieldname": "customer_type",
-   "fieldtype": "Select",
-   "label": "Customer Type",
-   "oldfieldname": "customer_type",
-   "oldfieldtype": "Select",
-   "options": "Company\nIndividual\nPartnership",
-   "reqd": 1
-  },
-  {
    "fieldname": "customer_group",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -78,13 +68,23 @@
    "label": "Customer Details",
    "oldfieldname": "customer_details",
    "oldfieldtype": "Code"
+  },
+  {
+   "default": "Company",
+   "fieldname": "type_customer",
+   "fieldtype": "Select",
+   "label": "Type Customer",
+   "oldfieldname": "customer_type",
+   "oldfieldtype": "Select",
+   "options": "Company\nIndividual\nPartnership",
+   "reqd": 1
   }
  ],
  "icon": "fa fa-user",
  "idx": 363,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-02-10 02:53:23.331464",
+ "modified": "2026-02-10 03:08:25.170296",
  "modified_by": "Administrator",
  "module": "Enquiry Management",
  "name": "Customer",

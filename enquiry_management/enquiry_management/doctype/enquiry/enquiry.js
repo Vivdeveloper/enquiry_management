@@ -201,7 +201,7 @@ function set_customer_filter_enq(frm) {
 		}
 		return {
 			filters: {
-				custom_customer_type1: frm.doc.customer_type
+				type_customer: frm.doc.customer_type
 			}
 		};
 	});
