@@ -30,6 +30,19 @@
    "read_only": 1
   },
   {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "label": "Is Group"
+  },
+  {
+   "fieldname": "parent_segment",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Parent Segment",
+   "options": "Segment"
+  },
+  {
    "fieldname": "rgt",
    "fieldtype": "Int",
    "hidden": 1,
@@ -44,16 +57,24 @@
    "label": "Is Group"
   },
   {
-   "fieldname": "old_parent",
-   "fieldtype": "Link",
-   "label": "Old Parent",
-   "options": "Segment"
-  },
-  {
    "fieldname": "parent_segment",
    "fieldtype": "Link",
    "ignore_user_permissions": 1,
    "label": "Parent Segment",
+   "options": "Segment"
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Right",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Link",
+   "label": "Old Parent",
    "options": "Segment"
   }
  ],
@@ -61,7 +82,7 @@
  "index_web_pages_for_search": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2026-02-10 01:13:33.598306",
+ "modified": "2026-02-10 01:29:04.417819",
  "modified_by": "Administrator",
  "module": "Enquiry Management",
  "name": "Segment",

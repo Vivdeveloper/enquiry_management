@@ -218,6 +218,8 @@ def get_permission_info():
 		as_dict=True
 	)
 
+
+
 	if not user_config:
 		permissions.append("No User Configuration found - limited access")
 		return {"user": user, "roles": [], "permissions": permissions}

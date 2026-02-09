@@ -208,16 +208,16 @@ function set_customer_filter_enq(frm) {
 }
 
 function set_segment_filters(frm) {
-	// Level 1: root segments (no parent)
+	// Segment = Level 2 (children of root: All Segment)
 	frm.set_query('segment', function() {
 		return {
 			filters: {
-				parent_segment: ['in', ['', null]]
+				parent_segment: "All Segment"
 			}
 		};
 	});
 
-	// Level 2: children of selected segment
+	// Sub Segment = Level 3 (children of selected Segment)
 	frm.set_query('sub_segment', function() {
 		if (!frm.doc.segment) {
 			return { filters: { name: ['in', ['__none__']] } };
@@ -229,7 +229,7 @@ function set_segment_filters(frm) {
 		};
 	});
 
-	// Level 3: children of selected sub_segment
+	// Sub Sub Segment = Level 4 (children of selected Sub Segment)
 	frm.set_query('sub_sub_segment', function() {
 		if (!frm.doc.sub_segment) {
 			return { filters: { name: ['in', ['__none__']] } };

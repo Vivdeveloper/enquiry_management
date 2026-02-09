@@ -7,6 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "user",
+  "info",
   "section_break_pomd",
   "department",
   "reporting_tos",
@@ -71,12 +72,17 @@
    "label": "Primary Organisation",
    "options": "Organisation",
    "reqd": 1
+  },
+  {
+   "fieldname": "info",
+   "fieldtype": "Heading",
+   "label": "If a user has both Head and Normal roles, the Segment and Sub-Segment should not be displayed."
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-02-08 12:06:53.421308",
+ "modified": "2026-02-10 02:22:13.194059",
  "modified_by": "Administrator",
  "module": "Enquiry Management",
  "name": "User Configuration",

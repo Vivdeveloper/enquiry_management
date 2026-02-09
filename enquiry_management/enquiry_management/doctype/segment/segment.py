@@ -7,6 +7,7 @@ from frappe.model.document import Document
 
 
 class Segment(Document):
+
 	def validate(self):
 		self.validate_tree_depth()
 
@@ -30,13 +31,11 @@ class Segment(Document):
 				)
 			parent = frappe.db.get_value("Segment", parent, "parent_segment")
 
-		# Level 4 cannot be a group
-		if depth == 2 and not cint(self.is_group):
-			frappe.throw("Level 2 is not allowed when is_group = 0.")
-		if depth == 3 and cint(self.is_group):
-			frappe.throw("Level 3 is not allowed when is_group = 1.")
-		if depth == 4 and cint(self.is_group):
-			frappe.throw("Level 4 is not allowed when is_group = 1.")
+		# Auto-set group flags by level
+		if depth in (2, 3):
+			self.is_group = 1
+		if depth == 4:
+			self.is_group = 0
 
 		# Level 4 cannot have children
 		if depth == 4 and self.name:
