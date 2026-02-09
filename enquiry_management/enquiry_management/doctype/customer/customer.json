@@ -70,13 +70,12 @@
    "oldfieldtype": "Code"
   },
   {
-   "default": "Company",
    "fieldname": "type_customer",
    "fieldtype": "Select",
    "label": "Type Customer",
    "oldfieldname": "customer_type",
    "oldfieldtype": "Select",
-   "options": "Company\nIndividual\nPartnership",
+   "options": "End User\nContractor",
    "reqd": 1
   }
  ],
@@ -84,7 +83,7 @@
  "idx": 363,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-02-10 03:08:25.170296",
+ "modified": "2026-02-10 03:13:26.699554",
  "modified_by": "Administrator",
  "module": "Enquiry Management",
  "name": "Customer",
