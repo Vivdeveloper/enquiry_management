@@ -7,8 +7,7 @@ app_license = "mit"
 
 # Apps
 # ------------------
-# TEst By  vivek choudhary
-required_apps = ["frappe"]
+# tetst
 
 # Each item in the list will be shown as an app in the apps page
 # add_to_apps_screen = [
