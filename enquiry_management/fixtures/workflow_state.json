@@ -1,0 +1,37 @@
+[
+ {
+  "name": "Draft",
+  "doctype": "Workflow State",
+  "workflow_state_name": "Draft",
+  "style": "Warning",
+  "icon": ""
+ },
+ {
+  "name": "Open",
+  "doctype": "Workflow State",
+  "workflow_state_name": "Open",
+  "style": "Info",
+  "icon": ""
+ },
+ {
+  "name": "Unclear",
+  "doctype": "Workflow State",
+  "workflow_state_name": "Unclear",
+  "style": "Warning",
+  "icon": ""
+ },
+ {
+  "name": "Offer",
+  "doctype": "Workflow State",
+  "workflow_state_name": "Offer",
+  "style": "Success",
+  "icon": ""
+ },
+ {
+  "name": "Regret",
+  "doctype": "Workflow State",
+  "workflow_state_name": "Regret",
+  "style": "Danger",
+  "icon": ""
+ }
+]

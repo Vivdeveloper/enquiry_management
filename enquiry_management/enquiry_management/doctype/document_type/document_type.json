@@ -24,7 +24,7 @@
  "module": "Enquiry Management",
  "name": "Document Type",
  "naming_rule": "By fieldname",
- "owner": "kartik@exacuer.com",
+ "owner": "Administrator",
  "permissions": [
   {
    "create": 1,

@@ -38,7 +38,7 @@
  "modified_by": "Administrator",
  "module": "Enquiry Management",
  "name": "Contractor",
- "owner": "kartik@exacuer.com",
+ "owner": "Administrator",
  "permissions": [
   {
    "create": 1,

@@ -83,6 +83,23 @@ doctype_list_js = {"Enquiry": "enquiry_management/doctype/enquiry/enquiry_list.j
 # before_install = "enquiry_management.install.before_install"
 # after_install = "enquiry_management.install.after_install"
 
+# Fixtures
+# --------
+fixtures = [
+	{
+		"doctype": "Workflow State",
+		"filters": [["name", "in", ["Draft", "Open", "Unclear", "Offer", "Regret"]]],
+	},
+	{
+		"doctype": "Workflow Action Master",
+		"filters": [["name", "in", ["Register", "Submit", "Mark as Regret"]]],
+	},
+	{
+		"doctype": "Workflow",
+		"filters": [["name", "=", "Enquiry Workflow"]],
+	},
+]
+
 # Uninstallation
 # ------------
 

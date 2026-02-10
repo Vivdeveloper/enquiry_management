@@ -71,7 +71,7 @@
  "module": "Enquiry Management",
  "name": "Consultant",
  "naming_rule": "By \"Naming Series\" field",
- "owner": "kartik@exacuer.com",
+ "owner": "Administrator",
  "permissions": [
   {
    "create": 1,

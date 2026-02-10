@@ -1,0 +1,17 @@
+[
+ {
+  "name": "Register",
+  "doctype": "Workflow Action Master",
+  "workflow_action_name": "Register"
+ },
+ {
+  "name": "Submit",
+  "doctype": "Workflow Action Master",
+  "workflow_action_name": "Submit"
+ },
+ {
+  "name": "Mark as Regret",
+  "doctype": "Workflow Action Master",
+  "workflow_action_name": "Mark as Regret"
+ }
+]

@@ -63,7 +63,7 @@
  "modified_by": "Administrator",
  "module": "Enquiry Management",
  "name": "Assignment Log",
- "owner": "kartik@exacuer.com",
+ "owner": "Administrator",
  "permissions": [],
  "row_format": "Dynamic",
  "rows_threshold_for_grid_search": 20,

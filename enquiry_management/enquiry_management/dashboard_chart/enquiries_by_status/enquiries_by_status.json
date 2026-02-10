@@ -22,7 +22,7 @@
  "module": "Enquiry Management",
  "name": "Enquiries by Status",
  "number_of_groups": 0,
- "owner": "kartik@exacuer.com",
+ "owner": "Administrator",
  "parent_document_type": "",
  "roles": [],
  "show_values_over_chart": 0,
